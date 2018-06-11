@@ -87,28 +87,205 @@
         <div class="col-md-9 col-sm-8 wow fadeInUp" data-wow-delay="0.2s">
           <div class="about-thumb">
             <h1>Our Solution</h1>
-						<h2>Goal</h2>
-						<p>In the past decade, the amount of internet users has increased rapidly, replacing other traditional forms of media and entertainment with a skyrocketing trend among all ages known as social media. Specifically, social media is a website or application that enables users to create and share content or to participate in social networking, which is the form of communication through social media. With social media capturing the public’s attention, as many as 65% of American adults use social networking sites. As a famous writer focusing on the recent technological developments and the changes occur, Erik Qualman states that “we don't have a choice on whether we do social media, the choice is how well we do it.” As social media gains popularity among the adults in the US, the influences of social media branch off into youth creating a rapidly increasing social network audience among all ages, which is quite contrary to the audience in the past decade. While social media may appear to be aiding a variety of youthful people to discover their proclaimed identity through technology, social media is gradually taking over the traditional forms of social interaction as online communication and information sharing become one’s voice.
-</p>
-						<p>Among the many social media applications, Instagram, released in 2010, grows quickly and currently has become one of the most popular ones in the US. With 1 million registered users in two months, 10 million in a year, and ultimately 800 million as of last fall, over 50 billion photos have been uploaded to the service. As a photo and video-sharing social networking service, it allows users to upload photos and videos to the service, which can be edited with various filters and organized with tags and location information. In addition, posts of an account can be shared publicly or with pre-approved followers. Users are able to browse other users' content by tags and locations, and view trending content as well. Users can also "like" photos, and follow other users to add their content to a feed. Specifically, many people have started to view the likes they receive for the posts as a major measurement of their personal influence and even their success in social interactions. As a result, as more and more people pay attention to how many likes they may receive for each post, they have always been looking for a program that would do this job for them, which would take their past posting information and make predictions about the upcoming ones. Consequently, our group decides to take on this quest and utilize the innovative machine learning knowledge that we acquired in the 349 course to build a program for this purpose. We think this will not be an easy task to do, but we believe with the help of the professor and the TAs, we will be able to build a reliable and convenient tool.</p>
+						<h2>Motivation</h2>
+						<p>In the past decade, the amount of internet users has increased rapidly, replacing other traditional forms
+							of media and entertainment with a skyrocketing trend among all ages known as social media.
+							Specifically, social media is a website or application that enables users to create and share content
+							or to participate in social networking, which is the form of communication through social media.
+							With social media capturing the public’s attention, as many as 65% of American adults use social
+							networking sites.</p>
+						<p>Among the many social media applications, Instagram, released in 2010, grows quickly and currently
+							has become one of the most popular ones in the US. As a photo and video-sharing social networking service,
+							it allows users to upload photos and videos to the service, which can be edited with various filters and
+							organized with tags and location information. Users are able to browse other users' content by tags and
+							locations, and view trending content as well. Users can also "like" photos and follow other users to
+							add their content to a feed.</p>
+						<p>Specifically, many people have started to view the likes they receive for the posts as a major measurement
+							of their personal influence and even their success in social interactions. As a result, as more and more
+							people pay attention to how many likes they may receive for each post, they have always been looking for
+							a program that would do this job for them, which would take their past posting information and
+							make predictions about the upcoming ones. Consequently, our group decides to take on this quest and
+							utilize the innovative machine learning knowledge that we acquired in the 349 course to build a program
+							for this purpose.</p>
 
 						<h2>Dataset</h2>
-						<p>Placeholder</p>
+						<p>We have written a web crawler based on Selenium to get data from Instagram.
+							Throughout the project, we collected 2285 data points for building the model. </p>
+						<p>Specifically, the data includes 10 attributes and 1 label. </p>
+						<p>Attributes:</p>
+						<ol>
+							<li>the number of posts associated with the account</li>
+							<li>the number of followers associated with the account</li>
+							<li>the number of other accounts that the account follows</li>
+							<li>if there is a location associated with the post</li>
+							<li>for each post, the number of people “ated” in the post</li>
+							<li>for each post, the number of hashtags in the post’s description</li>
+							<li>for each post, the total number of posts of hashtags in the post’s description</li>
+							<li>for each post, the total number of followers of the accounts “ated” in post</li>
+							<li>for each post, the total number of followings of the accounts “ated” in the post</li>
+							<li>for each post, the total number of posts of the accounts “ated” in the post</li>
+						</ol>
+
+						<p>Label: the number of likes received for the post</p>
+
+						<p>Before doing the training, we processed the data in various ways, including categorizing the number
+							of likes from the raw numbers to 6 categories using log10 (class 0: 1-9 likeness; class 1: 10~99 likeness;
+							class 2: 100~999 likeness; etc.). We used all the data to train the model and 10-fold cross validation to
+							validate the model.</p>
+
+						<p>The following figure shows the distribution of the attributes and label from the dataset. </p>
+						<img src="images/data1.jpg" alt="Figure 1" width="500" height="300">
+						<p>We can observe that the shapes of most of our attributes are close to unimodal and approximately
+							Gaussian Distribution. If we go further and observe the shapes of each class for each attributes,
+							we also see that they look similar to Gaussian Distribution with different mean values and variance values.
+							Therefore, the algorithm can make use of this feature to classify the dataset.</p>
+						<p>The distribution of label is also close to Gaussian Distribution. Most posts from our dataset have 10 to 99 likes
+							or 100 to 999 likes. They are class 1 and class 2, correspondingly.</p>
+
 
 						<h2>Training and Testing</h2>
-            <p>Placeholder</p>
+            <p>After getting the data from our web crawler and conducting the preprocesses, all the data were put into
+							a csv file. This file was then loaded into Weka to train using different models via 10 fold cross validation.
+							 (Please see the  result section below for details on the models used and the results.</p>
 
-						<h2>Result</h2>
-            <p>include graphs and captions here</p>
-						<img src="images/slide-img2.jpg" alt="Figure 1" width="300" height="300">
-						<p>Figure 1</p>
-						<img src="images/slide-img2.jpg" alt="Figure 2" width="300" height="300">
-						<p>Figure 2</p>
+
+						<h2>Result and Analysis</h2>
+						<p>We trained our dataset with 17 models from Weka. The accuracy result is listed in the table below.</p>
+						<table class="table">
+							<tr>
+								<th class="tableentry">Algorithm</th>
+								<th class="tableentry">Accuracy</th>
+								<th class="tableentry">Precision</th>
+								<th class="tableentry">Recall</th>
+								<th class="tableentry">F-Measure</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Filtered Classifier</th>
+								<th class="tableentry">81.53%</th>
+								<th class="tableentry">0.808</th>
+								<th class="tableentry">0.815</th>
+								<th class="tableentry">0.810</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Bagging</th>
+								<th class="tableentry">81.27%</th>
+								<th class="tableentry">0.806</th>
+								<th class="tableentry">0.813</th>
+								<th class="tableentry">0.807</th>
+							</tr>
+							<tr>
+								<th class="tableentry">OneR</th>
+								<th class="tableentry">80.48%</th>
+								<th class="tableentry">N/A</th>
+								<th class="tableentry">0.805</th>
+								<th class="tableentry">N/A</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Classification Via Regression</th>
+								<th class="tableentry">80.44%</th>
+								<th class="tableentry">0.798</th>
+								<th class="tableentry">0.804</th>
+								<th class="tableentry">0.797</th>
+							</tr>
+							<tr>
+								<th class="tableentry">BayesNet</th>
+								<th class="tableentry">79.87%</th>
+								<th class="tableentry">0.804</th>
+								<th class="tableentry">0.799</th>
+								<th class="tableentry">0.800</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Random Forest</th>
+								<th class="tableentry">79.69%</th>
+								<th class="tableentry">0.793</th>
+								<th class="tableentry">0.797</th>
+								<th class="tableentry">0.795</th>
+							</tr>
+							<tr>
+								<th class="tableentry">J48</th>
+								<th class="tableentry">79.52%</th>
+								<th class="tableentry">0.794</th>
+								<th class="tableentry">0.794</th>
+								<th class="tableentry">0.793</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Random Tree</th>
+								<th class="tableentry">75.62%</th>
+								<th class="tableentry">0.760</th>
+								<th class="tableentry">0.756</th>
+								<th class="tableentry">0.758</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Logistic</th>
+								<th class="tableentry">72.47%</th>
+								<th class="tableentry">0.703</th>
+								<th class="tableentry">0.725</th>
+								<th class="tableentry">0.702</th>
+							</tr>
+							<tr>
+								<th class="tableentry">IBK</th>
+								<th class="tableentry">72.21%</th>
+								<th class="tableentry">0.722</th>
+								<th class="tableentry">0.722</th>
+								<th class="tableentry">0.722</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Multilayer Perceptron</th>
+								<th class="tableentry">64.38%</th>
+								<th class="tableentry">0.640</th>
+								<th class="tableentry">0.644</th>
+								<th class="tableentry">0.625</th>
+							</tr>
+							<tr>
+								<th class="tableentry">AdaBoost M1</th>
+								<th class="tableentry">63.46%</th>
+								<th class="tableentry">N/A</th>
+								<th class="tableentry">0.653</th>
+								<th class="tableentry">N/A</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Decision Stump</th>
+								<th class="tableentry">63.46%</th>
+								<th class="tableentry">N/A</th>
+								<th class="tableentry">0.635</th>
+								<th class="tableentry">N/A</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Stacking</th>
+								<th class="tableentry">42.41%</th>
+								<th class="tableentry">N/A</th>
+								<th class="tableentry">0.424</th>
+								<th class="tableentry">N/A</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Vote</th>
+								<th class="tableentry">42.41%</th>
+								<th class="tableentry">N/A</th>
+								<th class="tableentry">0.424</th>
+								<th class="tableentry">N/A</th>
+							</tr>
+							<tr>
+								<th class="tableentry">ZeroR</th>
+								<th class="tableentry">42.41%</th>
+								<th class="tableentry">N/A</th>
+								<th class="tableentry">0.424</th>
+								<th class="tableentry">N/A</th>
+							</tr>
+							<tr>
+								<th class="tableentry">Naive Bayes</th>
+								<th class="tableentry">34.35%</th>
+								<th class="tableentry">0.525</th>
+								<th class="tableentry">0.341</th>
+								<th class="tableentry">0.371</th>
+							</tr>
+						</table>
+						<p>TODO</p>
+
 
 						<h2>Want to Learn More?</h2>
-            <a href="https://docs.google.com/document/d/1w-YjNb0_nHEcbzuUTK_-Tfh2yi7wv8mYn5Io7yFwVOM/edit">Full Report</a>
+            <a href="finalreport.pdf">Full Report</a>
 						<p></p>
-						<a href="https://github.com/jennifermliu/InstagramLikePredictor">Source Code</a>
+						<a href="https://github.com/jennifermliu/InstagramLikePredictor">Source Code and Dataset</a>
 
 					</div>
         </div>

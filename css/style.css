@@ -452,7 +452,14 @@ a:hover, a:active, a:focus {
   color: #ffffff;
 }
 
+#about .table{
+  width:70%
+}
 
+#about .tableentry{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
 
 /*---------------------------------------
     Galllery section
