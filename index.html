@@ -138,7 +138,10 @@
 						<p>We can observe that the shapes of most of our attributes are close to unimodal and approximately
 							Gaussian Distribution. If we go further and observe the shapes of each class for each attributes,
 							we also see that they look similar to Gaussian Distribution with different mean values and variance values.
-							Therefore, the algorithm can make use of this feature to classify the dataset.</p>
+							Therefore, the algorithms can make use of this feature to classify the dataset. The attribute “followingNum”
+							has the most obvious difference of Gaussian distributions between class 2 and class 3. This attribute will be
+							one of the most important features for training.</p>
+
 						<p>The distribution of label is also close to Gaussian Distribution. Most posts from our dataset have 10 to 99 likes
 							or 100 to 999 likes. They are class 1 and class 2, correspondingly.</p>
 
@@ -150,7 +153,7 @@
 
 
 						<h2>Result and Analysis</h2>
-						<p>We trained our dataset with 17 models from Weka. The accuracy result is listed in the table below.</p>
+						<p>We trained our dataset with 16 models from Weka. The accuracy result is listed in the table below.</p>
 						<table class="table">
 							<tr>
 								<th class="tableentry">Algorithm</th>
@@ -172,13 +175,6 @@
 								<th class="tableentry">0.806</th>
 								<th class="tableentry">0.813</th>
 								<th class="tableentry">0.807</th>
-							</tr>
-							<tr>
-								<th class="tableentry">OneR</th>
-								<th class="tableentry">80.48%</th>
-								<th class="tableentry">N/A</th>
-								<th class="tableentry">0.805</th>
-								<th class="tableentry">N/A</th>
 							</tr>
 							<tr>
 								<th class="tableentry">Classification Via Regression</th>
@@ -279,7 +275,84 @@
 								<th class="tableentry">0.371</th>
 							</tr>
 						</table>
-						<p>TODO</p>
+
+
+						<p>As we can see from the table, ZeroR has an accuracy of 42.41%.  ZeroR uses the majority class (class 2)
+							as the final class. From the dataset distribution above, we know that class 2 contains roughly 40% of
+							all data points, which is matched with the accuracy of ZeroR. </p>
+						<p>The model with the highest accuracy is Filtered Classifier, which has an accuracy of 81.53%.
+							Filtered Classifier is 92.24% better than ZeroR given this dataset. We set the classifier of
+							Filtered Classifier to J48. From the table, we observe that J48 achieves an accuracy slightly lower than
+							Filtered Classifier. We think the reason is that during the training process of Filter Classifier,
+							the model can pick out the best attributes and the best samples. Since our data set has some kind of unbalance,
+							the filter can decrease bias and unbalance and improve the performance.</p>
+						<p>Overall the accuracy of J48 and Classification Via Regression are relative great. This is because
+							the attribute values for each class are relatively different. It matches with what we mentioned before about
+							how the shape of each class for each attribute is close to Gaussian Distribution with different mean and
+							variance values. From the report of J48, we can find the attribute “followingNum” is the first splitter node.
+							This is because this attribute has the most obvious difference between class 2 and class 3 (two majority classes)
+							that we mentioned in previous part.</p>
+						<p>Comparing the accuracies of Bagging and AdaBoost M1, we can see that Bagging achieves a better performance
+							than AdaBoost M1. Both Bagging and AdaBoost M1 try to combine all the weak learners. However, Bagging trained
+							each weak learner separately with random samples while AdaBoost M1 trained the weak learner based on previous
+							weak learner. Most of the time, AdaBoost M1 can achieve a better performance than Bagging on training dataset
+							but is easier to overfit. In our project, we think AdaBoost achieves a relatively worse performance than
+							Bagging due to overfitting. </p>
+						<p>The accuracy of IBK can reflect the similarity of data points. A good performance can prove that data points
+							with similar attributes values probably have the same labels. But this algorithm didn’t consider the weight
+							of different attributes. Its relatively worse accuracy as compared to J48 indicates that some attributes are
+							more important than the rest.</p>
+
+						<p>The performance of each class of J48 is shown below.</p>
+						<table class="table">
+							<tr>
+								<th class="tableentry">Class</th>
+								<th class="tableentry">Precision</th>
+								<th class="tableentry">Recall</th>
+								<th class="tableentry">F-Measure</th>
+							</tr>
+							<tr>
+								<th class="tableentry">1</th>
+								<th class="tableentry">0.581</th>
+								<th class="tableentry">0.494</th>
+								<th class="tableentry">0.534</th>
+							</tr>
+							<tr>
+								<th class="tableentry">2</th>
+								<th class="tableentry">0.858</th>
+								<th class="tableentry">0.856</th>
+								<th class="tableentry">0.857</th>
+							</tr>
+							<tr>
+								<th class="tableentry">3</th>
+								<th class="tableentry">0.769</th>
+								<th class="tableentry">0.844</th>
+								<th class="tableentry">0.805</th>
+							</tr>
+							<tr>
+								<th class="tableentry">4</th>
+								<th class="tableentry">0.753</th>
+								<th class="tableentry">0.606</th>
+								<th class="tableentry">0.672</th>
+							</tr>
+							<tr>
+								<th class="tableentry">5</th>
+								<th class="tableentry">0.725</th>
+								<th class="tableentry">0.713</th>
+								<th class="tableentry">0.719</th>
+							</tr>
+							<tr>
+								<th class="tableentry">6</th>
+								<th class="tableentry">0.400</th>
+								<th class="tableentry">0.364</th>
+								<th class="tableentry">0.381</th>
+							</tr>
+						</table>
+
+						<p>From the table above, we can see that the performance of different classes is unbalanced.
+							Class 2 achieves the best performance while Class 6 achieves the worst performance.
+							We think this is probably caused by the unbalanced distribution of data set. From the distribution of data set,
+							 we can observe that Class 2 contains more than 40% of all data points while Class 6 has only 11 samples.</p>
 
 
 						<h2>Want to Learn More?</h2>
